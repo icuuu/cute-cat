@@ -1,5 +1,6 @@
 #include "program.h"
 
+#include <iostream>
 #include <fstream>
 #include <unordered_map>
 
@@ -7,6 +8,7 @@
 
 // Command headers
 #include "slashcmd/base.h"
+// #include "slashcmd/cat.h"
 #include "slashcmd/ping.h"
 #include "msgcmd/base.h"
 #include "msgcmd/quote.h"
@@ -23,7 +25,8 @@ void Program::run()
 {
 	std::unordered_map<std::string, SlashCommand::Base*> slashCommands = 
 	{
-		{ "ping", new SlashCommand::Ping }
+		{ "ping", new SlashCommand::Ping },
+		// { "cat", new SlashCommand::Cat }
 	};
 
 	std::unordered_map<std::string, MessageCommand::Base*> messageCommands =
@@ -53,6 +56,9 @@ void Program::run()
 
 	bot.on_ready([this, &bot, &slashCommands, &messageCommands](const dpp::ready_t& event)
 	{
+		printf("press 'y' to delete all commands, press anything else to disregard\n");
+		if (std::cin.get() == 'y') bot.global_bulk_command_delete_sync();
+		
 		printf("Server, ID\n");
 		for (const auto& [snowflake, guild] : bot.current_user_get_guilds_sync())
 		{
