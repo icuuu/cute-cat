@@ -4,7 +4,6 @@
 #include <unordered_map>
 
 #include <dpp/dpp.h>
-#include <ncurses.h>
 
 // Command headers
 #include "slashcmd/base.h"
@@ -22,17 +21,6 @@ Program::Program(const char* configPath)
 
 void Program::run()
 {
-	/* Ncurses shiz
-	initscr();
-	char c;
-	while (c != 'q')
-	{
-		refresh();
-		c = getch();
-	}
-	endwin();
-	*/
-
 	std::unordered_map<std::string, SlashCommand::Base*> slashCommands = 
 	{
 		{ "ping", new SlashCommand::Ping }
