@@ -4,7 +4,7 @@ namespace MessageCommand
 {
 	void Quote::execute(Context& context, dpp::cluster& bot, const dpp::message_context_menu_t& event)
 	{
-		event.reply("> " + event.get_message().content + "\n—" + event.get_message().author.global_name);
+		event.reply("> " + event.get_message().content + "\n—" + event.get_message().author.username);
 	}
 
 	dpp::slashcommand Quote::apiObj(dpp::cluster& bot, std::string name)
