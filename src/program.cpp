@@ -9,6 +9,7 @@
 // Command headers
 #include "slashcmd/base.h"
 #include "slashcmd/avatar.h"
+#include "slashcmd/echo.h"
 // #include "slashcmd/cat.h"
 #include "slashcmd/ping.h"
 #include "msgcmd/base.h"
@@ -29,6 +30,7 @@ void Program::run()
 	std::unordered_map<std::string, SlashCommand::Base*> slashCommands = 
 	{
 		{ "avatar", new SlashCommand::Avatar },
+		{ "echo", new SlashCommand::Echo },
 		{ "ping", new SlashCommand::Ping },
 		// { "cat", new SlashCommand::Cat }
 	};
