@@ -4,7 +4,17 @@ namespace SlashCommand
 {
 	void Uptime::execute(Context& context, dpp::cluster& bot, const dpp::slashcommand_t& event)
 	{
-		event.reply(":timer: " + bot.uptime().to_string());
+		dpp::utility::uptime u = bot.uptime();
+		std::string description = "```c\n" +
+			std::to_string(u.days) + " days " +
+			std::to_string(u.hours) + " hours " +
+			std::to_string(u.mins) + " minutes " +
+			std::to_string(u.secs) + " seconds```";
+		
+		dpp::embed embed;
+		embed.set_title("Uptime");
+		embed.set_description(description);
+		event.reply(dpp::message(event.command.channel_id, embed));
 	}
 
 	dpp::slashcommand Uptime::apiObj(dpp::cluster& bot, std::string name)
