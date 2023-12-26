@@ -13,6 +13,7 @@
 #include "slashcmd/echo.h"
 // #include "slashcmd/cat.h"
 #include "slashcmd/ping.h"
+#include "slashcmd/uptime.h"
 #include "msgcmd/base.h"
 #include "msgcmd/quote.h"
 #include "usercmd/base.h"
@@ -34,6 +35,7 @@ void Program::run()
 		{ "chess", new SlashCommand::Chess },
 		{ "echo", new SlashCommand::Echo },
 		{ "ping", new SlashCommand::Ping },
+		{ "uptime", new SlashCommand::Uptime }
 		// { "cat", new SlashCommand::Cat }
 	};
 
