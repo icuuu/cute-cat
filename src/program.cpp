@@ -77,7 +77,7 @@ void Program::run()
 		if (event.adding_guild->id == 746067864481431562)
 		{
 			dpp::embed embed;
-			embed.set_color(this->context.config.at("colors").at("member_add"));
+			embed.set_color(this->context.config.at("embed_colors").at("guild_member_add"));
 			embed.set_description("**" + event.added.get_user()->username + "** has joined");
 			embed.set_thumbnail(event.added.get_user()->get_avatar_url());
 			bot.message_create(dpp::message(746067864481431565, embed));
@@ -89,7 +89,7 @@ void Program::run()
 		if (event.removing_guild->id == 746067864481431562)
 		{
 			dpp::embed embed;
-			embed.set_color(this->context.config.at("colors").at("member_remove"));
+			embed.set_color(this->context.config.at("embed_colors").at("guild_member_remove"));
 			embed.set_description("**" + event.removed.username + "** has left");
 			embed.set_thumbnail(event.removed.get_avatar_url());
 			bot.message_create(dpp::message(746067864481431565, embed));
