@@ -55,34 +55,45 @@ void Program::run()
 
 	bot.on_message_create([this, &bot](const dpp::message_create_t& event)
 	{
-		if (event.msg.content.contains("edward"))
-			bot.message_add_reaction(event.msg, "edward:1042165132555460639");
-
-		/*	
-		if (event.msg.content.substr(0, 7) == "kitty, ")
+		bool isGuildPriveleged = true;
+		/*
+		std::vector<uint64_t> privelegedGuilds = this->context.config.at("priveleged_guilds").get<std::vector<uint64_t>>();
+		for (const auto& id : privelegedGuilds)
 		{
-			nlohmann::json postData;
-			postData["model"] = "gpt-3.5-turbo";
-    			postData["prompt"] = "What is the current time?";
-    			postData["temperature"] = 0;
-			postData["max_tokens"] = 100;
-			postData["top_p"] = 1;
-			postData["frequency_penalty"] = 0.0;
-			postData["presence_penalty"] = 0.0;
-			postData["stop"] = {"\n"};
-			bot.request("https://api.openai.com/v1/chat/completions", dpp::m_post,
-				[](const dpp::http_request_completion_t& cc)
-			{
-				std::cout << cc.body << "\n";
-			},
-			postData.dump(),
-			"application/json",
-			{
-				{"Content-Type", "application/json"},
-				{"Authorization", "Bearer " + this->context.config.at("openai-key").get<std::string>()}
-			});
+			if (id == event.msg.guild_id)
+				isGuildPriveleged == true;
 		}
 		*/
+
+		if (isGuildPriveleged)
+		{
+			if (event.msg.content.contains("edward"))
+				bot.message_add_reaction(event.msg, "edward:1042165132555460639");
+		}
+	});
+
+	bot.on_guild_member_add([this, &bot](const dpp::guild_member_add_t& event)
+	{
+		if (event.adding_guild->id == 746067864481431562)
+		{
+			dpp::embed embed;
+			embed.set_color(this->context.config.at("colors").at("member_add"));
+			embed.set_description("**" + event.added.get_user()->username + "** has joined");
+			embed.set_thumbnail(event.added.get_user()->get_avatar_url());
+			bot.message_create(dpp::message(746067864481431565, embed));
+		}
+	});
+
+	bot.on_guild_member_remove([this, &bot](const dpp::guild_member_remove_t& event)
+	{
+		if (event.removing_guild->id == 746067864481431562)
+		{
+			dpp::embed embed;
+			embed.set_color(this->context.config.at("colors").at("member_remove"));
+			embed.set_description("**" + event.removed.username + "** has left");
+			embed.set_thumbnail(event.removed.get_avatar_url());
+			bot.message_create(dpp::message(746067864481431565, embed));
+		}
 	});
 
 	bot.on_slashcommand([this, &bot, &slashCommands](const dpp::slashcommand_t& event)
